@@ -1,12 +1,24 @@
 const express = require('express');
 const app = express();
 const port = 3000;
+//const axios = require('axios');
+const Twitter = require('./api/helpers/twitter');
+const twitter = new Twitter();
+require('dotenv').config();
 
 app.get('/tweets', (req, res) => {
-    console.log(req.query);
+    //console.log(req.query);
     const query = req.query.q;
     const count = req.query.count;
-    res.send('Hello');
+    console.log(process.env.TWITTER_API_TOKEN);
+
+    twitter.get(query, count).then((response) => {
+        res.status(200).send(response.data);
+    }).catch((error) => {
+        res.status(400).send(error);
+    });
+
+
 });
 
 app.listen(port, () => {
