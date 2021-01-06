@@ -6,11 +6,17 @@ const Twitter = require('./api/helpers/twitter');
 const twitter = new Twitter();
 require('dotenv').config();
 
+app.use('/tweets', (req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    next();
+});
+
 app.get('/tweets', (req, res) => {
     //console.log(req.query);
     const query = req.query.q;
     const count = req.query.count;
-    console.log(process.env.TWITTER_API_TOKEN);
+    //  console.log(process.env.TWITTER_API_TOKEN);
+
 
     twitter.get(query, count).then((response) => {
         res.status(200).send(response.data);
