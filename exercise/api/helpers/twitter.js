@@ -1,15 +1,13 @@
  const axios = require('axios');
- const URL = "https://api.twitter.com/1.1/search/tweets.json";
-
-
+ const TWITTER_URL = "https://api.twitter.com/1.1/search/tweets.json";
 
  class Twitter {
-
-     get(query, count, maxId) {
-         return axios.get(URL, {
+     get(query, resultType, maxId) {
+         return axios.get(TWITTER_URL, {
              params: {
                  q: query,
-                 count: count,
+                 result_type: resultType,
+                 count: 10,
                  tweet_mode: "extended",
                  max_id: maxId
              },
@@ -19,7 +17,5 @@
          })
      }
  }
-
-
 
  module.exports = Twitter;
